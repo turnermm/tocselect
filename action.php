@@ -20,8 +20,8 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              $wikifn = $INPUT->str('seltoc_val');
              $file = wikiFN($wikifn) ;
              if(file_exists($file)) {
-                 $time = time()+120;
-                 setcookie('tocselect',$wikifn,$time,DOKU_BASE);
+                 //$time = time()+120;
+                 setcookie('tocselect',$wikifn,0,DOKU_BASE);
              $this->get_toc($wikifn);
                  if($this->retv ) {
              echo $this->retv;
