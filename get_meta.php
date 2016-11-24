@@ -18,22 +18,35 @@ $toc = p_get_metadata($id,'description tableofcontents');
 
 $current=0;
 $start_level = 0;
-echo  "<UL>\n";
+global $count;
+$count = 0;
+echo  "<UL>\n"; $count++;
 foreach ($toc as $head) {
   $level =  p_our_item($head, $current,$id);
   if($start_level==0) $start_level = $level;
     
 }
-if($start_level != $level) echo "</UL>\n";
+if($start_level != $level){ 
+echo "</UL>\n";
+$count=$count --;
+}
 echo  "</UL>\n";
+$count--;
+if($count > 0) echo  "</UL>\n";
+
+echo "count: $count\n";
+
+
+exit;
 
 function p_our_item($h, &$n,$id){
+    global $count;
     if($n==0) $n=$h['level'];
   
     if($n < $h['level'] ) {
-      echo "<UL>\n";             
+      echo "<UL>\n"; $count++;             
     } 
-    else if ($n != $h['level']) echo "</UL>\n";
+    else if ($n != $h['level'])  {echo "</UL>\n";  $count--; }
     
     echo    '<li>' . format_link($h['title'], $h['hid'],$id) . '(', $h['level'] .")</li>\n";
     $n = $h['level'];

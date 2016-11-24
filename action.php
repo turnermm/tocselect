@@ -12,7 +12,9 @@ define ("TOC_URL", DOKU_BASE ."doku.php?id=");
 
 class action_plugin_tocselect extends DokuWiki_Action_Plugin {
  private $retv;  
- 
+ private $ul_count;
+ private $ul_open;
+ private $ul_closed;
     function register(&$controller){    
        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');           
     }
@@ -26,6 +28,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              $file = wikiFN($wikifn) ;
              if(file_exists($file)) {
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
+                $this->ul_count =  $this->ul_open = $this->ul_closed = 0;                 
              $this->get_toc($wikifn);
                  if($this->retv ) {
              echo $this->retv;
@@ -48,12 +51,21 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
         $current=0;
         $start_level = 0;
         $this->retv .=  "<UL>\n";
+        $this->ulcount('open');
         foreach ($toc as $head) {
             $level =  $this->format_item($head, $current,$id);
             if($start_level==0) $start_level = $level;            
         }
-        if($start_level != $level) $this->retv .= "</UL>\n";
+        if($start_level != $level)  {
+            $this->retv .= "</UL>\n";
+            $this->ulcount('closed');
+        }   
         $this->retv .=  "</UL>\n";
+        $this->ulcount('closed');
+        if($this->ul_open > $this->ul_closed) {
+        $this->retv .=  "</UL>\n";
+    }
+    
     }
     
     function format_item($h, &$n,$id){
@@ -61,8 +73,12 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
           
             if($n < $h['level'] ) {
               $this->retv .= "<UL>\n";             
+              $this->ulcount('open');              
             } 
-            else if ($n != $h['level']) $this->retv .= "</UL>\n";
+            else if ($n != $h['level']) {
+              $this->retv .= "</UL>\n";
+               $this->ulcount('closed');
+            } 
             
             $this->retv .=    '<li>' . $this->format_link($h['title'], $h['hid'],$id) ;//. '(', $h['level'] .")</li>\n";
             $n = $h['level'];
@@ -72,6 +88,18 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
         $link = "<a href ='". TOC_URL  . $id. '#'. $anchor."'>" . "$title</a>";
         return $link;
     }     
+    
+    function ulcount($which) {
+        
+            if ($which == "open") { 
+                $this->ul_count++;
+                $this->ul_open++;
+            }
+            else if ($which == "closed") {                
+                $this->ul_count --; 
+                $this->ul_closed ++;                                 
+            }   
+    }
  }
      
   
