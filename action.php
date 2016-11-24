@@ -9,7 +9,6 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
  private $retv;  
  
     function register(&$controller){    
-     //   $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE',  $this, 'handle_act_preprocess');  
        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');           
     }
  
@@ -19,17 +18,28 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              $event->stopPropagation();
              $event->preventDefault();
              $wikifn = $INPUT->str('seltoc_val');
-              echo rawurldecode($wikifn); 
-  
-       
+             $file = wikiFN($wikifn) ;
+             if(file_exists($file)) {
              $this->get_toc($wikifn);
+                 if($this->retv ) {
              echo $this->retv;
+           }   
+                     else {
+                         echo "<H3>No TOC for $wikifn</H3>";
+                    }     
+             }
+             else {
+                    echo 'E_FNF';
+             }
+             
+             //
            }   
     }
     
     function get_toc($id) {
         $this->retv = "";
         $toc = p_get_metadata($id,'description tableofcontents');
+        if(!$toc) return "";
         $current=0;
         $start_level = 0;
         $this->retv .=  "<UL>\n";
