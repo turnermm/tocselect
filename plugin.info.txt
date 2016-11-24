@@ -1,0 +1,7 @@
+base  tocselect
+author  Myron Turner
+email  turnermm02@shaw.ca
+date  2016-11-23
+name  tocselect
+desc  Adds textbox to install varying tables of contents in page or side bar
+url  https://www.dokuwiki.org/plugin:tocselect
