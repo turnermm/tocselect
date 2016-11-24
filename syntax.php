@@ -46,7 +46,7 @@ class syntax_plugin_tocselect extends DokuWiki_Syntax_Plugin {
    function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){           
          $renderer->doc .=  '<DIV><FORM><input type="button" value="Select" id="selectoc_btn"  name="selectoc_btn" style="font-size:10pt;" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="wiki:id"></FORM></DIV>';
-         $renderer->doc .= '<div id = "setctoc_out"  style="width:200px;height:400px;overflow:auto;"></div>';
+         $renderer->doc .= '<div id = "setctoc_out"  style="width:15em;height:400px;overflow:auto;"></div>';
         }        
    }   
 }
