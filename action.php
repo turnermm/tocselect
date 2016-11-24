@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Myron Turner <turnermm02@shaw.ca>
+ * 
+ */
 if(!defined('DOKU_INC')) die();
 
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
@@ -20,7 +25,6 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              $wikifn = $INPUT->str('seltoc_val');
              $file = wikiFN($wikifn) ;
              if(file_exists($file)) {
-                 //$time = time()+120;
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
              $this->get_toc($wikifn);
                  if($this->retv ) {
