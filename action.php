@@ -20,13 +20,15 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     }
  
     function _ajax_call(Doku_Event $event, $param) {
-            global $INPUT, $USERINFO,$INFO;
+            
+            global $INPUT;
+            
            if ($event->data == 'tocselect') {
              $event->stopPropagation();
              $event->preventDefault();
              $wikifn = $INPUT->str('seltoc_val');
              $file = wikiFN($wikifn) ;
-             if(file_exists($file)) {
+             if(file_exists($file) &&  auth_quickaclcheck( $wikifn) ) {                 
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
                 $this->ul_count =  $this->ul_open = $this->ul_closed = 0;                 
              $this->get_toc($wikifn);
