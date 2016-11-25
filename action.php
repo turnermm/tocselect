@@ -50,8 +50,9 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
         if(!$toc) return "";
         $current=0;
         $start_level = 0;
-        $this->retv .=  "<UL>\n";
         $this->ulcount('open');
+        $this->retv .=  "<UL>\n";
+     
         foreach ($toc as $head) {
             $level =  $this->format_item($head, $current,$id);
             if($start_level==0) $start_level = $level;            
@@ -72,15 +73,16 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
             if($n==0) $n=$h['level'];
           
             if($n < $h['level'] ) {
-              $this->retv .= "<UL>\n";             
               $this->ulcount('open');              
+              $this->retv .= "<UL>\n";             
+              
             } 
             else if ($n != $h['level']) {
               $this->retv .= "</UL>\n";
                $this->ulcount('closed');
             } 
             
-            $this->retv .=    '<li>' . $this->format_link($h['title'], $h['hid'],$id) ;//. '(', $h['level'] .")</li>\n";
+            $this->retv .=    '<li>' . $this->format_link($h['title'], $h['hid'],$id) . "</li>\n";
             $n = $h['level'];
             return $n;
         }
@@ -92,11 +94,13 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     function ulcount($which) {
         
             if ($which == "open") { 
+                if($this->ul_open> 0) $this->retv .="\n" .'<li class="ihidden">'; 
                 $this->ul_count++;
                 $this->ul_open++;
             }
             else if ($which == "closed") {                
                 $this->ul_count --; 
+                 if($this->ul_closed> 0) $this->retv .="</li>\n"; 
                 $this->ul_closed ++;                                 
             }   
     }

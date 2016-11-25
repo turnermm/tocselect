@@ -3,3 +3,7 @@ div#setctoc_out {
     height:400px;
     overflow:auto;
 }
+
+.ihidden {
+  list-style-type: none;
+}
