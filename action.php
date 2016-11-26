@@ -28,11 +28,12 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              $event->preventDefault();
              $wikifn = $INPUT->str('seltoc_val');
              $file = wikiFN($wikifn) ;
-             if(file_exists($file) &&  auth_quickaclcheck( $wikifn) ) {                 
+             $exists =  file_exists($file);
+             if($exists &&  auth_quickaclcheck( $wikifn) ) {                 
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
                 $this->ul_count =  $this->ul_open = $this->ul_closed = 0;                 
              $this->get_toc($wikifn);
-                 if($this->retv ) {
+                 if($this->retv) {
              echo $this->retv;
            }   
                      else {
@@ -40,7 +41,10 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                     }     
              }
              else {
-                    echo 'E_FNF';
+                    if($exists && !auth_quickaclcheck( $wikifn) ) {
+                        echo "You need read permission for the Selected document.";
+                    }
+                   else if(!$exists) echo 'E_FNF';
              }
              
            }   

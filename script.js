@@ -9,9 +9,11 @@
         jQuery.post( DOKU_BASE + 'lib/exe/ajax.php',  params,
                 function (data) {  
                 if(!data) {
+                        document.getElementById("setctoc_out").innerHTML = "";                    
                     alert ('No TOC for ' + file);
                 }
                 else if (data == 'E_FNF') {
+                        document.getElementById("setctoc_out").innerHTML = "";                    
                     alert (file + " not found");
                 }
                  else  document.getElementById("setctoc_out").innerHTML = data;                           
