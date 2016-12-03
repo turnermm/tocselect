@@ -15,7 +15,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
  private $ul_count;
  private $ul_open;
  private $ul_closed;
-    function register(&$controller){    
+    function register(Doku_Event_Handler $controller){    
        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');           
     }
  
