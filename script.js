@@ -20,17 +20,36 @@
                     },
                 'html'
             );      
+          jQuery( "#tocseltoggle img").click(function() {  
+                     jQuery("#setctoc_out").toggle();                                        
+                     var dir = DOKU_BASE + 'lib/plugins/tocselect/';
+                      var curSrc = jQuery(this).attr('src');
+                      if (curSrc.match(/open/)) {
+                          jQuery(this).attr('src', dir +'closed.png');
+                      }
+                      if (curSrc.match(/closed/)) {
+                          jQuery(this).attr('src', dir +'open.png ');
+                      }
+                     
+          });
+          jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
    }); 
-     var cval = getCookie('tocselect');
+      var dom = document.getElementById("selectoc_id");      
+      if(dom && dom.value.match(/curID/)) {         
+         dom.value = JSINFO['id'];  
+         jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+      }
+     else {
+         var cval = tocsel_getCookie('tocselect');
      if(cval && document.getElementById("selectoc_id")) {
          cval = cval.replace(/%3A/g,':');
-     
         document.getElementById("selectoc_id").value = cval;
         jQuery( "#selectoc_btn" ).click();
      }
+     }  
  });
  
- function getCookie(cname) {
+ function tocsel_getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
     for(var i = 0; i <ca.length; i++) {

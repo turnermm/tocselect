@@ -10,6 +10,7 @@
 if(!defined('DOKU_INC')) die();
 
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
+define('TOCSEL_DIR', DOKU_BASE . 'lib/plugins/tocselect/');
 require_once(DOKU_PLUGIN.'syntax.php');
 
 /**
@@ -34,16 +35,25 @@ class syntax_plugin_tocselect extends DokuWiki_Syntax_Plugin {
 
    function connectTo($mode) {
         $this->Lexer->addSpecialPattern('~~SELECTTOC~~',$mode,'plugin_tocselect'); 
+        $this->Lexer->addSpecialPattern('~~SELECTTOC>curID~~',$mode,'plugin_tocselect'); 
     }
     
   function handle($match, $state, $pos, Doku_Handler $handler) {
+    
+           if(preg_match('/curID/', $match)) {
+               $match = 'curID';               
+           }
+           else $match = 'wiki:id';
+            
            return array($state,$match);
   }
 
    function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){           
-         $renderer->doc .=  '<DIV><FORM><input type="button" value="Select" id="selectoc_btn"  name="selectoc_btn" style="font-size:10pt;" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="wiki:id"></FORM></DIV>';
-         $renderer->doc .= '<div id = "setctoc_out"></div>';
+         list($state,$wikid) = $data;  
+
+         $renderer->doc .=  '<DIV><FORM><input type="button" value="Select" id="selectoc_btn"  name="selectoc_btn" style="font-size:10pt;" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="'.$wikid .'"></FORM></DIV>';
+         $renderer->doc .= '<div id="tocseltoggle"><img src="'  . TOCSEL_DIR. 'open.png"></div><div id = "setctoc_out"></div>';
         }        
    }   
 }
