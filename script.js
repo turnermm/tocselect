@@ -38,6 +38,7 @@
       if(dom && dom.value.match(/curID/)) {         
          dom.value = JSINFO['id'];  
          jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+          jQuery( "#selectoc_btn" ).click();
       }
      else {
          var cval = tocsel_getCookie('tocselect');
