@@ -1,13 +1,18 @@
 div#setctoc_out {
-    width:15em;
-   /* height:400px; */
+   max-height:400px;
     overflow:auto;
-    
 }
+    
 #tocseltoggle{
     float:left; 
 }
 
 .ihidden {
   list-style-type: none;
+}
+
+.dokuwiki .tocsel_right {
+    width:15.5em;
+    float: right;
+    margin-left: 1.5em;
 }

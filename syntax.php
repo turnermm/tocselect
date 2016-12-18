@@ -40,6 +40,7 @@ class syntax_plugin_tocselect extends DokuWiki_Syntax_Plugin {
     
   function handle($match, $state, $pos, Doku_Handler $handler) {
     
+            $handler->_addCall('notoc',array(),$pos);
            if(preg_match('/curID/', $match)) {
                $match = 'curID';               
            }
@@ -51,9 +52,10 @@ class syntax_plugin_tocselect extends DokuWiki_Syntax_Plugin {
    function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){           
          list($state,$wikid) = $data;  
-
+        $renderer->doc .='<div class="tocsel_right">';
          $renderer->doc .=  '<DIV><FORM><input type="button" value="Select" id="selectoc_btn"  name="selectoc_btn" style="font-size:10pt;" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="'.$wikid .'"></FORM></DIV>';
          $renderer->doc .= '<div id="tocseltoggle"><img src="'  . TOCSEL_DIR. 'open.png"></div><div id = "setctoc_out"></div>';
+         $renderer->doc .='</div>';
         }        
    }   
 }
