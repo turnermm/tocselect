@@ -52,9 +52,10 @@ class syntax_plugin_tocselect extends DokuWiki_Syntax_Plugin {
    function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml'){           
          global $lang;
+         $select = $this->getLang('select');
          list($state,$wikid) = $data;  
         $renderer->doc .='<div class="tocsel_right">';
-         $renderer->doc .=  '<DIV><FORM><input type="button" value="Select" id="selectoc_btn"  name="selectoc_btn" style="font-size:10pt;" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="'.$wikid .'"></FORM></DIV>';
+         $renderer->doc .=  '<DIV><FORM><input type="button" value="' . $select. '" id="selectoc_btn"  name="selectoc_btn" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="'.$wikid .'"></FORM></DIV>';
          $renderer->doc .= '<div id="tocseltoggle"><img src="'  . TOCSEL_DIR. 'open.png"></div ><span class="tocsel_title">'  . $lang['toc'] .'</span><div id = "setctoc_out"></div>';
          $renderer->doc .='</div>';
         }        

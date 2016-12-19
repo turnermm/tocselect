@@ -19,7 +19,14 @@ span.tocsel_title{
 }
 
 .dokuwiki .tocsel_right {
-    width:15.5em;
+    width:16em;
     float: right;
-    margin-left: 1.5em;
+    margin-left: 1em;
+}
+#selectoc_id {
+    width:10em;
+    font-size: 9.5pt;
+}
+#selectoc_btn {
+   font-size: 8.5pt; 
 }
