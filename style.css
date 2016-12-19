@@ -1,10 +1,17 @@
 div#setctoc_out {
    max-height:400px;
     overflow:auto;
+    font-size: 9.5pt;
 }
     
 #tocseltoggle{
     float:left; 
+    padding-right:4px;
+}
+
+span.tocsel_title{
+    font-size: 10pt;
+    font-weight:bold;
 }
 
 .ihidden {

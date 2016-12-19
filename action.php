@@ -37,7 +37,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              echo $this->retv;
            }   
                      else {
-                         echo "<H3>No TOC for $wikifn</H3>";
+                         echo "<b>No TOC for $wikifn</b>";
                     }     
              }
              else {
