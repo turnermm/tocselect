@@ -37,12 +37,12 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              echo $this->retv;
            }   
                      else {
-                         echo "<b>No TOC for $wikifn</b>";
+                     echo "<b>" . $this->getLang('notoc') ." $wikifn</b>";
                     }     
              }
              else {
                     if($exists && !auth_quickaclcheck( $wikifn) ) {
-                        echo "You need read permission for the Selected document.";
+                     echo $this->getLang('perm');
                     }
                    else if(!$exists) echo 'E_FNF';
              }

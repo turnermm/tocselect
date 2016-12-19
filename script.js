@@ -10,11 +10,11 @@
                 function (data) {  
                 if(!data) {
                         document.getElementById("setctoc_out").innerHTML = "";                    
-                    alert ('No TOC for ' + file);
+                        alert ( LANG.plugins.tocselect.notoc + " " + file);
                 }
                 else if (data == 'E_FNF') {
                         document.getElementById("setctoc_out").innerHTML = "";                    
-                    alert (file + " not found");
+                        alert (file + " " + LANG.plugins.tocselect.notfound);
                 }
                  else  document.getElementById("setctoc_out").innerHTML = data;                           
                     },
