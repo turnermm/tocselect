@@ -31,10 +31,8 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
               if(preg_match('/^(.*?)' . $regex . '\s*$/',$wikifn,$matches))
               {
                    $wikifn = $matches[1] . ':file';
-                    echo "pseudo wikifn: $wikifn\n</br />";    
                     $ns = getNS($wikifn);
                    $pathinf = pathinfo(wikiFN($wikifn) );
-                    echo "namespace: $ns" . "\n<br />ns directory path:" . $pathinf['dirname'] ; 
                    $list =  $this->get_dir_list($pathinf['dirname'], $ns);
                    echo $list;
                     return;
@@ -143,12 +141,12 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     }
     
     private function handle_directory($curdir, $namespace) {
-        return "<li><span  class='clicker' onclick=tocsel_updatetoc('$namespace:$curdir:*');>$namespace:$curdir:*</span></li>";
+        return "<li><span  class='clicker' onclick=\"tocsel_updatetoc('$namespace:$curdir:*');\">$namespace:$curdir:*</span></li>";
     }
     
     private function handle_file($file, $namespace) {
         $file = preg_replace("/\.txt$/","", $file);
-        return "<li><span  class='clicker' onclick=tocsel_updatetoc('$namespace:$file');>$namespace:$file</span></li>";
+        return "<li><span  class='clicker' onclick=\"tocsel_updatetoc('$namespace:$file');\">$namespace:$file</span></li>";
     }
     
  }
