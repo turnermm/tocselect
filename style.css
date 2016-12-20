@@ -30,3 +30,7 @@ span.tocsel_title{
 #selectoc_btn {
    font-size: 8.5pt; 
 }
+.clicker {
+      cursor: pointer;
+      color:__link__;
+}

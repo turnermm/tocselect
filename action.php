@@ -26,7 +26,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
            if ($event->data == 'tocselect') {
              $event->stopPropagation();
              $event->preventDefault();
-             $wikifn = $INPUT->str('seltoc_val');
+             $wikifn = rawurldecode($INPUT->str('seltoc_val'));
              $regex = preg_quote(':*');
               if(preg_match('/^(.*?)' . $regex . '\s*$/',$wikifn,$matches))
               {
@@ -34,7 +34,10 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                     echo "pseudo wikifn: $wikifn\n</br />";    
                     $ns = getNS($wikifn);
                    $pathinf = pathinfo(wikiFN($wikifn) );
-                    echo "namespace: $ns" . "\n<br />ns directory path:" . $pathinf['dirname'] ; return;
+                    echo "namespace: $ns" . "\n<br />ns directory path:" . $pathinf['dirname'] ; 
+                   $list =  $this->get_dir_list($pathinf['dirname'], $ns);
+                   echo $list;
+                    return;
               }    
               else   $file = wikiFN($wikifn) ;
 
@@ -120,6 +123,34 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                 $this->ul_closed ++;                                 
             }   
     }
+    
+    private function get_dir_list($dir, $namespace){
+        $ret = "<UL>";
+         $dh = opendir($dir);
+         if(!$dh) return;
+         while (($file = readdir($dh)) !== false) {
+            if($file == '.' || $file == '..') continue;           # cur and upper dir
+            if(is_dir("$dir/$file")) {
+                $ret .= $this->handle_directory($file, $namespace);
+            }  
+            else {
+                $ret .=  $this->handle_file($file, $namespace);                     
+            }
+        }
+        closedir($dh);
+        $ret = $ret . "</UL>";
+        return $ret;
+    }
+    
+    private function handle_directory($curdir, $namespace) {
+        return "<li><span  class='clicker' onclick=tocsel_updatetoc('$namespace:$curdir:*');>$namespace:$curdir:*</span></li>";
+    }
+    
+    private function handle_file($file, $namespace) {
+        $file = preg_replace("/\.txt$/","", $file);
+        return "<li><span  class='clicker' onclick=tocsel_updatetoc('$namespace:$file');>$namespace:$file</span></li>";
+    }
+    
  }
      
   
