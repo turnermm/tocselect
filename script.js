@@ -50,6 +50,15 @@
      }  
  });
  
+
+ function  tocsel_updatetoc(name) {
+        var dom = document.getElementById("selectoc_id");      
+
+         dom.value = name;
+         jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+          jQuery( "#selectoc_btn" ).click();
+      
+ }
  function tocsel_getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
