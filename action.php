@@ -27,7 +27,17 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
              $event->stopPropagation();
              $event->preventDefault();
              $wikifn = $INPUT->str('seltoc_val');
-             $file = wikiFN($wikifn) ;
+             $regex = preg_quote(':*');
+              if(preg_match('/^(.*?)' . $regex . '\s*$/',$wikifn,$matches))
+              {
+                   $wikifn = $matches[1] . ':file';
+                    echo "pseudo wikifn: $wikifn\n</br />";    
+                    $ns = getNS($wikifn);
+                   $pathinf = pathinfo(wikiFN($wikifn) );
+                    echo "namespace: $ns" . "\n<br />ns directory path:" . $pathinf['dirname'] ; return;
+              }    
+              else   $file = wikiFN($wikifn) ;
+
              $exists =  file_exists($file);
              if($exists &&  auth_quickaclcheck( $wikifn) ) {                 
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
