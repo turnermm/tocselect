@@ -123,25 +123,37 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     }
     
     private function get_dir_list($dir, $namespace){
-        $ret = "<UL>";
+        $retdir = "<UL>";
+        $retfile = "";
+        $dir_ar = array();
+        $file_ar = array();
+        
          $dh = opendir($dir);
          if(!$dh) return;
          while (($file = readdir($dh)) !== false) {
             if($file == '.' || $file == '..') continue;           # cur and upper dir
-            if(is_dir("$dir/$file")) {
-                $ret .= $this->handle_directory($file, $namespace);
+            if(is_dir("$dir/$file")) {              
+                $dir_ar[$file] = $this->handle_directory($file, $namespace);
             }  
-            else {
-                $ret .=  $this->handle_file($file, $namespace);                     
+            else {                
+                $file_ar[$file] =  $this->handle_file($file, $namespace);                     
             }
         }
         closedir($dh);
-        $ret = $ret . "</UL>";
+        ksort($dir_ar);
+        ksort($file_ar);
+        foreach ($dir_ar as $key=>$val) {
+            $retdir .= $val;
+        }
+        foreach ($file_ar as $key=>$val) {
+            $retfile .= $val;
+        }
+        $ret = $retdir . $retfile  . "</UL>";
         return $ret;
     }
     
     private function handle_directory($curdir, $namespace) {
-        return "<li><span  class='clicker' onclick=\"tocsel_updatetoc('$namespace:$curdir:*');\">$namespace:$curdir:*</span></li>";
+        return "<li><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:$curdir:*');\">$namespace:$curdir:*</span></li>";
     }
     
     private function handle_file($file, $namespace) {
