@@ -1,10 +1,18 @@
 
  
  jQuery(document).ready(function() {
+     var toc_title =  jQuery("span.tocsel_title").html();
      jQuery( "#selectoc_btn" ).click(function() { 
        var file = this.form.selectoc_id.value;        
-       var params = "seltoc_val=" +  encodeURIComponent(file);   
-       params += '&call=tocselect';     
+         if(file.match(/\w:\*$/)) {
+            jQuery("span.tocsel_title").html('Index');
+        }   
+        else
+             {
+                 jQuery("span.tocsel_title").html(toc_title); 
+             }     
+        var params = "seltoc_val=" +  encodeURIComponent(file);   
+        params += '&call=tocselect';     
      
         jQuery.post( DOKU_BASE + 'lib/exe/ajax.php',  params,
                 function (data) {  
@@ -16,7 +24,9 @@
                         document.getElementById("setctoc_out").innerHTML = "";                    
                         alert (file + " " + LANG.plugins.tocselect.notfound);
                 }
-                 else  document.getElementById("setctoc_out").innerHTML = data;                           
+                 else {                      
+                     document.getElementById("setctoc_out").innerHTML = data;                           
+                 }
                     },
                 'html'
             );      
@@ -52,13 +62,12 @@
  
 
  function  tocsel_updatetoc(name) {
-        var dom = document.getElementById("selectoc_id");      
-
-         dom.value = name;
-         jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
-          jQuery( "#selectoc_btn" ).click();
-      
+        var dom = document.getElementById("selectoc_id");
+        dom.value = name;
+        jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+        jQuery( "#selectoc_btn" ).click();
  }
+ 
  function tocsel_getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
