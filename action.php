@@ -15,6 +15,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
  private $ul_count;
  private $ul_open;
  private $ul_closed;
+ private $up;
     function register(Doku_Event_Handler $controller){    
        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');           
     }
@@ -33,29 +34,37 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                    $wikifn = $matches[1] . ':file';
                     $ns = getNS($wikifn);
                    $pathinf = pathinfo(wikiFN($wikifn) );
+                   if($matches[1]) {
+                       $up = dirname($pathinf['dirname']);
+                       $up = preg_replace("#.*?/data/pages#","",$up);
+                       $up = str_replace('/', ':',  $up);                       
+                       if(!empty($up)) {
+                           $this->up = $this-> handle_up($up);
+                                                   
+                       }
+                   }
                    $list =  $this->get_dir_list($pathinf['dirname'], $ns);
-                   echo $list;
+                    echo $list;
                     return;
               }    
               else   $file = wikiFN($wikifn) ;
 
-             $exists =  file_exists($file);
-             if($exists &&  auth_quickaclcheck( $wikifn) ) {                 
+             $exists =  file_exists($file); 
+             if($exists &&  auth_quickaclcheck( $wikifn) ) {                     
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
                 $this->ul_count =  $this->ul_open = $this->ul_closed = 0;                 
-             $this->get_toc($wikifn);
+                $this->get_toc($wikifn);
                  if($this->retv) {
-             echo $this->retv;
-           }   
-                     else {
+                   echo $this->retv;
+                }   
+                 else {
                      echo "<b>" . $this->getLang('notoc') ." $wikifn</b>";
                     }     
-             }
+            }
              else {
                     if($exists && !auth_quickaclcheck( $wikifn) ) {
                      echo $this->getLang('perm');
-                    }
-                   else if(!$exists) echo 'E_FNF';
+                    }                  
              }
              
            }   
@@ -124,6 +133,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     
     private function get_dir_list($dir, $namespace){
         $retdir = "<UL>";
+        if(!empty($this->up)) $retdir .= $this->up;
         $retfile = "";
         $dir_ar = array();
         $file_ar = array();
@@ -161,6 +171,9 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
         return "<li><span  class='clicker' onclick=\"tocsel_updatetoc('$namespace:$file');\">$namespace:$file</span></li>";
     }
     
+    private function handle_up($namespace) {
+         return "<li><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:*');\">Up</span></li>  ";
+    }
  }
      
   

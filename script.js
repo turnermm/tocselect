@@ -17,12 +17,7 @@
         jQuery.post( DOKU_BASE + 'lib/exe/ajax.php',  params,
                 function (data) {  
                 if(!data) {
-                        document.getElementById("setctoc_out").innerHTML = "";                    
-                        alert ( LANG.plugins.tocselect.notoc + " " + file);
-                }
-                else if (data == 'E_FNF') {
-                        document.getElementById("setctoc_out").innerHTML = "";                    
-                        alert (file + " " + LANG.plugins.tocselect.notfound);
+                        document.getElementById("setctoc_out").innerHTML = "";                                           
                 }
                  else {                      
                      document.getElementById("setctoc_out").innerHTML = data;                           
