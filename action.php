@@ -17,9 +17,17 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
  private $ul_closed;
  private $up;
     function register(Doku_Event_Handler $controller){    
-       $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');           
+       $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');    
+       $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this,'handle_started');    
     }
  
+    function handle_started(Doku_Event $event, $param) {
+             global $conf;
+            if($this->getConf('notoc')) {
+                 $conf['tocminheads'] = 0;                   
+            }       
+                
+    }
     function _ajax_call(Doku_Event $event, $param) {
             
             global $INPUT;
@@ -50,7 +58,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
               else   $file = wikiFN($wikifn) ;
 
              $exists =  file_exists($file); 
-             if($exists &&  auth_quickaclcheck( $wikifn) ) {                     
+             if($exists &&  auth_quickaclcheck( $wikifn) ) {   
                  setcookie('tocselect',$wikifn,0,DOKU_BASE);
                 $this->ul_count =  $this->ul_open = $this->ul_closed = 0;                 
                 $this->get_toc($wikifn);
