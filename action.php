@@ -150,6 +150,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                 $dir_ar[$file] = $this->handle_directory($file, $namespace);
             }  
             else {                
+                if(!preg_match("/\.txt$/",$file)|| preg_match("/^_/",$file) ) continue;  //exclude non .txt files and templates
                 $file_ar[$file] =  $this->handle_file($file, $namespace);                     
             }
         }
