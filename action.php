@@ -43,13 +43,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                     $ns = getNS($wikifn);
                    $pathinf = pathinfo(wikiFN($wikifn) );
                    if($matches[1]) {
-                       $up = dirname($pathinf['dirname']);
-                       $up = preg_replace("#.*?/data/pages#","",$up);
-                       $up = str_replace('/', ':',  $up);                       
-                       if(!empty($up)) {
-                           $this->up = $this-> handle_up($up);
-                                                   
-                       }
+                       $this->up =  $this->get_up_dir($pathinf );  //inserted in get_dir_list()
                    }
                    $list =  $this->get_dir_list($pathinf['dirname'], $ns);
                     echo $list;
@@ -66,7 +60,9 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
                    echo $this->retv;
                 }   
                  else {
-                     echo "<b>" . $this->getLang('notoc') ." $wikifn</b>";
+                     $up =  $this->get_up_dir(pathinfo($file));
+                     echo "<ul>$up";                     
+                     echo "<li><span class='ten__ptb'>" . $this->getLang('notoc') ." $wikifn</span></li></ul>";
                     }     
             }
              else {
@@ -181,6 +177,16 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     
     private function handle_up($namespace) {
          return "<li><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:*');\">Up</span></li>  ";
+    }
+    
+    private function get_up_dir($pathinf) {
+         $up = dirname($pathinf['dirname']);
+         $up = preg_replace("#.*?/data/pages#","",$up);
+        $up = str_replace('/', ':',  $up);                       
+        if(!empty($up)) {
+            return $this-> handle_up($up);  
+        }    
+      return "";        
     }
  }
      

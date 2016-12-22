@@ -3,8 +3,8 @@
  jQuery(document).ready(function() {
      var toc_title =  jQuery("span.tocsel_title").html();
      jQuery( "#selectoc_btn" ).click(function() { 
-       var file = this.form.selectoc_id.value;        
-         if(file.match(/\w:\*$/)) {
+       var file = this.form.selectoc_id.value;      
+         if(file.match(/:\*$/)) {
             jQuery("span.tocsel_title").html('Index');
         }   
         else
