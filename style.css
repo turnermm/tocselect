@@ -48,3 +48,9 @@ span.ten__ptb {
     font-weight:bold;
     font-size:10pt;
 }
+
+li.tocsel_up {
+    list-style-type:none;
+   padding: 4px;
+    margin: 0;
+}

@@ -9,6 +9,7 @@ if(!defined('DOKU_INC')) die();
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'action.php');
 define ("TOC_URL", DOKU_BASE ."doku.php?id=");
+define ("TOCSEL_IMGDIR", DOKU_BASE . 'lib/plugins/tocselect/img/');
 
 class action_plugin_tocselect extends DokuWiki_Action_Plugin {
  private $retv;  
@@ -83,7 +84,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
         $this->ulcount('open');
               
          $up = $this->get_up_dir(pathinfo(wikiFN("$id:file")));        
-        $this->retv .=  "<UL>$up\n";
+         $this->retv .=  "<UL class='tocsel_li1'>$up\n";
      
         foreach ($toc as $head) {
             $level =  $this->format_item($head, $current,$id);
@@ -179,7 +180,8 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     }
     
     private function handle_up($namespace) {
-         return "<li><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:*');\">Up</span></li>  ";
+        $png = '<img src = "' . TOCSEL_IMGDIR.'up.png' . '" />';
+         return "<li class= 'tocsel_up'><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:*');\">$png</span></li>  ";
     }
     
     private function get_up_dir($pathinf) {
