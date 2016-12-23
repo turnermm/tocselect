@@ -30,9 +30,13 @@ span.tocsel_title{
 #selectoc_btn {
    font-size: 8.5pt; 
 }
-.clicker {
+.clickerdir, .clicker {
       cursor: pointer;
       color:__link__;
+}
+.clickerfile {
+      cursor: pointer;
+      color:__existing__;
 }
 .hx1_5 {
     line-height: 1.5%
