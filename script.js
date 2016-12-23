@@ -26,6 +26,7 @@
                 'html'
             );      
           jQuery( "#tocseltoggle img").click(function() {  
+          return;
                      jQuery("#setctoc_out").toggle();                                        
                      var dir = DOKU_BASE + 'lib/plugins/tocselect/';
                       var curSrc = jQuery(this).attr('src');
@@ -37,12 +38,12 @@
                       }
                      
           });
-          jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+      //    jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
    }); 
       var dom = document.getElementById("selectoc_id");      
       if(dom && dom.value.match(/curID/)) {         
          dom.value = JSINFO['id'];  
-         jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+       //  jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
           jQuery( "#selectoc_btn" ).click();
       }
      else {
@@ -59,7 +60,7 @@
  function  tocsel_updatetoc(name) {
         var dom = document.getElementById("selectoc_id");
         dom.value = name;
-        jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+       // jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
         jQuery( "#selectoc_btn" ).click();
  }
  
