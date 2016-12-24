@@ -2,8 +2,11 @@
  
  jQuery(document).ready(function() {
      var toc_title =  jQuery("span.tocsel_title").html();
+      jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+   
      jQuery( "#selectoc_btn" ).click(function() { 
        var file = this.form.selectoc_id.value;      
+         jQuery("#setctoc_out").css('display','block');       
          if(file.match(/:\*$/)) {
             jQuery("span.tocsel_title").html('Index');
         }   
@@ -25,10 +28,11 @@
                     },
                 'html'
             );      
-          jQuery( "#tocseltoggle img").click(function() {  
-             //    jQuery("#setctoc_out").toggle();   
+            
+      jQuery("#tocseltoggle img").off("click").click(function(){
+          jQuery("#setctoc_out").toggle();   
           });
-      //    jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
+
    }); 
       var dom = document.getElementById("selectoc_id");      
       if(dom && dom.value.match(/curID/)) {         
