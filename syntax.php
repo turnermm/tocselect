@@ -54,9 +54,10 @@ class syntax_plugin_tocselect extends DokuWiki_Syntax_Plugin {
          global $lang;
          $select = $this->getLang('select');
          $nsroot = $this->getLang('nsroot');
+         $rootopen = $this->getLang('rootopen');
          list($state,$wikid) = $data;  
          $renderer->doc .='<div class="tocsel_right">';
-         $renderer->doc .='<span class="clickerdir  tocselb hx1_5" onclick="tocsel_updatetoc(\':*\');">'. $nsroot.'</span><br />';
+         $renderer->doc .='<span class="clickerdir  tocselb hx1_5" title="' .  $rootopen . '" onclick="tocsel_updatetoc(\':*\');">'. $nsroot.'</span><br />';
          $renderer->doc .=  '<DIV><FORM><input type="button" value="' . $select. '" id="selectoc_btn"  name="selectoc_btn" /> <INPUT type="text" id="selectoc_id" name="selectoc_id" value="'.$wikid .'"></FORM></DIV>';
          $renderer->doc .= '<div id="tocseltoggle"><img src="'  . TOCSEL_DIR. 'img/open.png"></div ><span class="tocsel_title">'  . $lang['toc'] .'</span><div id = "setctoc_out"></div>';
          $renderer->doc .='</div>';
