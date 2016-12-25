@@ -1,5 +1,4 @@
 
- 
  jQuery(document).ready(function() {
      var toc_title =  jQuery("span.tocsel_title").html();
       jQuery( "#tocseltoggle img" ).css( 'cursor', 'pointer' );    
@@ -31,6 +30,14 @@
             
       jQuery("#tocseltoggle img").off("click").click(function(){
           jQuery("#setctoc_out").toggle();   
+          var dir = DOKU_BASE + 'lib/plugins/tocselect/img/';
+          var curSrc = jQuery(this).attr('src');       
+          if (curSrc.match(/open/)) {
+              jQuery(this).attr('src', dir +'closed.png');
+          }
+          if (curSrc.match(/closed/)) {
+              jQuery(this).attr('src', dir +'open.png ');
+          }
           });
 
    }); 
