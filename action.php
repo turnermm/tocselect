@@ -180,7 +180,10 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     }
     
     private function handle_up($namespace) {
-        $png = '<img src = "' . TOCSEL_IMGDIR.'up.png' . '" />';
+        if(empty($namespace))
+              $title = 'Root NS';
+         else  $title = $namespace;
+        $png = '<img title = "' . $title. '"src = "' . TOCSEL_IMGDIR.'up.png' . '" />';
          return "<li class= 'tocsel_up'><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:*');\">$png</span></li>  ";
     }
     
@@ -188,10 +191,7 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
          $up = dirname($pathinf['dirname']);
          $up = preg_replace("#.*?/data/pages#","",$up);
         $up = str_replace('/', ':',  $up);                       
-        if(!empty($up)) {
-            return $this-> handle_up($up);  
-        }    
-      return "";        
+        return $this-> handle_up($up);   // empty $up = root ns
     }
  }
      
