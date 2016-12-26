@@ -31,6 +31,12 @@
              var a = jQuery("#selectoc_id");
              a.attr('title',a.attr('value')); 
        });
+       
+      jQuery("#tocsel_rootns").click(function(){             
+             var a = jQuery("#selectoc_id");
+             a.attr('title',a.attr('value')); 
+     });
+     
       jQuery("#tocseltoggle img").off("click").click(function(){
           jQuery("#setctoc_out").toggle();   
           var dir = DOKU_BASE + 'lib/plugins/tocselect/img/';
