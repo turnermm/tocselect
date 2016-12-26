@@ -1,7 +1,7 @@
 base  tocselect
 author  Myron Turner
 email  turnermm02@shaw.ca
-date  2016-12-25
+date  2016-12-26
 name  tocselect
 desc  Adds textbox and namespace/wiki:id index for installing tables of contents in page or side bar
 url  https://www.dokuwiki.org/plugin:tocselect
