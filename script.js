@@ -87,7 +87,7 @@
             c = c.substring(1);
         }
         if (c.indexOf(name) == 0) {
-            return c.substring(name.length,c.length);
+            return decodeURIComponent(c.substring(name.length,c.length));
         }
     }
     return "";

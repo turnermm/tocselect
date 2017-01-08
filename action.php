@@ -171,18 +171,24 @@ class action_plugin_tocselect extends DokuWiki_Action_Plugin {
     }
     
     private function handle_directory($curdir, $namespace) {
-        return "<li><span  class='clickerdir  tocselb' onclick=\"tocsel_updatetoc('$namespace:$curdir:*');\">$namespace:$curdir:*</span></li>";
+        
+        $page = urldecode("$namespace:$curdir") . ':*';
+        return "<li><span  class='clickerdir  tocselb' onclick=\"tocsel_updatetoc('$page');\">$page</span></li>";
     }
     
     private function handle_file($file, $namespace) {
         $file = preg_replace("/\.txt$/","", $file);
-        return "<li><span  class='clickerfile' onclick=\"tocsel_updatetoc('$namespace:$file');\">$namespace:$file</span></li>";
+        $page =  urldecode("$namespace:$file"); 
+        return "<li><span  class='clickerfile' onclick=\"tocsel_updatetoc('$page');\">$page</span></li>";
     }
     
     private function handle_up($namespace) {
         if(empty($namespace))
               $title = 'Root NS';
-         else  $title = $namespace;
+         else {
+            $namespace = urldecode($namespace);      
+            $title =$namespace;
+         } 
         $png = '<img title = "' . $title. '"src = "' . TOCSEL_IMGDIR.'up.png' . '" />';
          return "<li class= 'tocsel_up'><span  class='clicker  tocselb' onclick=\"tocsel_updatetoc('$namespace:*');\">$png</span></li>  ";
     }
